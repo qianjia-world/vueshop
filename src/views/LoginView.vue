@@ -39,8 +39,8 @@ export default {
   data () {
     return {
       user: {
-        username: 'qianjia.work@gmail.com',
-        password: '1234567'
+        username: '',
+        password: ''
       }
     }
   },
