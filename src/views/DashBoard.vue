@@ -1,8 +1,10 @@
 <template>
-    123
+<NavbarComponent></NavbarComponent>
+<router-view/>
 </template>
 
 <script>
+import NavbarComponent from '../components/NavbarComponent.vue'
 export default {
   created () {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)vueshop\s*=\s*([^;]*).*$)|^.*$/, '$1')
@@ -12,10 +14,13 @@ export default {
     this.$http.post(api, this.user)
       .then((res) => {
         if (!res.data.success) {
-          this.$router.push('login')
+          this.$router.push('/login')
         }
         console.log(res)
       })
+  },
+  components: {
+    NavbarComponent
   }
 }
 </script>

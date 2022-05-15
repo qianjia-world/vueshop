@@ -53,7 +53,7 @@ export default {
             const token = res.data.token
             const expired = new Date(res.data.expired)
             document.cookie = `vueshop=${token}; expires=${expired}`
-            this.$router.push('dashboard')
+            this.$router.push('/dashboard/products')
           }
         })
     }
