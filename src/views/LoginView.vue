@@ -39,8 +39,8 @@ export default {
   data () {
     return {
       user: {
-        username: '',
-        password: ''
+        username: 'qianjia.work@gmail.com',
+        password: '1234567'
       }
     }
   },
@@ -49,7 +49,9 @@ export default {
       const api = `${process.env.VUE_APP_API}admin/signin`
       this.$http.post(api, this.user)
         .then((res) => {
-          console.log(res)
+          const token = res.data.token
+          const expired = new Date(res.data.expired)
+          document.cookie = `vueshop=${token}; expires=${expired}`
         })
     }
   }
