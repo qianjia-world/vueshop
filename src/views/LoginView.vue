@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5">
-        <form class="row justify-content-center">
+        <form class="row justify-content-center" @submit="getapi">
         <div class="col-md-6">
             <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
             <div class="mb-2">
@@ -12,6 +12,7 @@
                 placeholder="Email address"
                 required
                 autofocus
+                v-model="user.username"
             />
             </div>
             <div class="mb-2">
@@ -22,6 +23,7 @@
                 class="form-control"
                 placeholder="Password"
                 required
+                v-model="user.password"
             />
             </div>
             <div class="text-end mt-4">
@@ -31,3 +33,25 @@
         </form>
     </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      user: {
+        username: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    getapi () {
+      const api = `${process.env.VUE_APP_API}admin/signin`
+      this.$http.post(api, this.user)
+        .then((res) => {
+          console.log(res)
+        })
+    }
+  }
+}
+</script>
