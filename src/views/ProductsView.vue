@@ -1,6 +1,6 @@
 <template>
 <div class="text-end">
-  <button class="btn btn-primary" type="button" @click="openModal">增加產品</button>
+  <button class="btn btn-primary" type="button" @click="openModal(true)">增加產品</button>
 </div>
 <table class="table mt-4">
   <thead>
@@ -29,7 +29,7 @@
       </td>
       <td>
         <div class="btn-group">
-          <button class="btn btn-outline-primary btn-sm">編輯</button>
+          <button @click="openModal(false, item)" class="btn btn-outline-primary btn-sm">編輯</button>
           <button class="btn btn-outline-danger btn-sm">刪除</button>
         </div>
       </td>
@@ -46,7 +46,8 @@ export default {
     return {
       products: [],
       pagination: {},
-      tempProduct: {}
+      tempProduct: {},
+      isNew: false
     }
   },
   methods: {
@@ -60,19 +61,27 @@ export default {
           }
         })
     },
-    openModal () {
-      this.tempProduct = {}
+    openModal (isnew, item) {
+      if (isnew) {
+        this.tempProduct = {}
+      } else {
+        this.tempProduct = { ...item }
+      }
+      this.isNew = isnew
       const productComponent = this.$refs.productModal
       productComponent.showModal()
     },
     updateProduct (item) {
       this.tempProduct = item
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
+      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
+      let httpMethod = 'post'
+      if (!this.isNew) {
+        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
+        httpMethod = 'put'
+      }
       const productComponent = this.$refs.productModal
-      this.$http.post(api, { data: this.tempProduct })
+      this.$http[httpMethod](api, { data: this.tempProduct })
         .then((res) => {
-          console.log(this.tempProduct)
-          console.log(res)
           productComponent.hideModal()
           this.getProducts()
         })
