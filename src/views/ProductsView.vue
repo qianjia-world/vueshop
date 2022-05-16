@@ -1,4 +1,7 @@
 <template>
+<div class="text-end">
+  <button class="btn btn-primary" type="button" @click="$refs.productModal.showModal">增加產品</button>
+</div>
 <table class="table mt-4">
   <thead>
     <tr>
@@ -33,9 +36,11 @@
     </tr>
   </tbody>
 </table>
+<productModal ref="productModal"></productModal>
 </template>
 
 <script>
+import productModal from '../components/ProductModal.vue'
 export default {
   data () {
     return {
@@ -49,7 +54,6 @@ export default {
       this.$http.get(api)
         .then((res) => {
           if (res.data.success) {
-            console.log(res)
             this.products = res.data.products
             this.pagination = res.data.pagination
           }
@@ -58,6 +62,9 @@ export default {
   },
   created () {
     this.grtProducts()
+  },
+  components: {
+    productModal
   }
 }
 </script>

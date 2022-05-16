@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5">
-        <form class="row justify-content-center" @submit="getapi">
+        <form class="row justify-content-center" @submit.prevent="getapi">
         <div class="col-md-6">
             <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
             <div class="mb-2">
