@@ -49,7 +49,7 @@ export default {
     }
   },
   methods: {
-    grtProducts () {
+    getProducts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
       this.$http.get(api)
         .then((res) => {
@@ -61,7 +61,7 @@ export default {
     }
   },
   created () {
-    this.grtProducts()
+    this.getProducts()
   },
   components: {
     productModal
