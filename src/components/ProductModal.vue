@@ -22,7 +22,7 @@ ref="modal">
               <label for="customFile" class="form-label">或 上傳圖片
                 <i class="fas fa-spinner fa-spin"></i>
               </label>
-              <input type="file" id="customFile" class="form-control">
+              <input type="file" id="customFile" class="form-control" @change="uploadFile" ref="fileInput">
             </div>
             <img class="img-fluid" alt="">
             <!-- 延伸技巧，多圖 -->
@@ -136,6 +136,18 @@ export default {
     },
     hideModal () {
       this.modal.hide()
+    },
+    uploadFile () {
+      const uploadedFile = this.$refs.fileInput.files[0]
+      const formData = new FormData()// js方法
+      formData.append('file-to-upload', uploadedFile)
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+      this.$http.post(api, formData).then((res) => {
+        if (res.data.success) {
+          this.tempProduct.imageUrl = res.data.imageUrl
+          console.log(this.tempProduct.imageUrl)
+        }
+      })
     }
   },
   mounted () {
