@@ -1,11 +1,14 @@
 <template>
 <NavbarComponent></NavbarComponent>
-<div class="container">
-<router-view/>
+<div class="container-fluid mt-3 position-relative">
+    <ToastMessages></ToastMessages>
+    <router-view/>
 </div>
 </template>
 
 <script>
+import emitter from '../methods/emitter'
+import ToastMessages from '@/components/ToastMessages.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 export default {
   created () {
@@ -20,7 +23,13 @@ export default {
       })
   },
   components: {
-    NavbarComponent
+    NavbarComponent,
+    ToastMessages
+  },
+  provide () {
+    return {
+      emitter
+    }
   }
 }
 </script>

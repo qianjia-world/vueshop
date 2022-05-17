@@ -89,7 +89,19 @@ export default {
       this.$http[httpMethod](api, { data: this.tempProduct })
         .then((res) => {
           productComponent.hideModal()
-          this.getProducts()
+          if (res.data.success) {
+            this.getProducts()
+            this.emitter.emit('push-message', {
+              style: 'success',
+              title: '更新成功'
+            })
+          } else {
+            this.emitter.emit('push-message', {
+              style: 'danger',
+              title: '更新失敗',
+              content: res.data.message.join('、')
+            })
+          }
         })
     },
     openDelProductModal (item) {
@@ -99,11 +111,23 @@ export default {
     },
     delProduct () {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
-      this.$http.delete(url).then((response) => {
-        console.log(response.data)
+      this.$http.delete(url).then((res) => {
+        console.log(res.data)
         const delComponent = this.$refs.delModal
         delComponent.hideModal()
-        this.getProducts()
+        if (res.data.success) {
+          this.getProducts()
+          this.emitter.emit('push-message', {
+            style: 'success',
+            title: '刪除成功'
+          })
+        } else {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '刪除失敗',
+            content: res.data.message.join('、')
+          })
+        }
       })
     }
   },
@@ -113,6 +137,7 @@ export default {
   components: {
     productModal,
     deleteModal
-  }
+  },
+  inject: ['emitter']
 }
 </script>
