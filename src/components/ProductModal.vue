@@ -111,7 +111,7 @@ ref="modal">
 </template>
 
 <script>
-import Modal from 'bootstrap/js/dist/modal'
+import modalmixins from '@/mixins/modalmixin'
 export default {
   props: {
     product: {
@@ -131,12 +131,6 @@ export default {
     }
   },
   methods: {
-    showModal () {
-      this.modal.show()
-    },
-    hideModal () {
-      this.modal.hide()
-    },
     uploadFile () {
       const uploadedFile = this.$refs.fileInput.files[0]
       const formData = new FormData()// js方法
@@ -150,8 +144,6 @@ export default {
       })
     }
   },
-  mounted () {
-    this.modal = new Modal(this.$refs.modal)
-  }
+  mixins: [modalmixins]
 }
 </script>
