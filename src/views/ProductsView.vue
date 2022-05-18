@@ -19,10 +19,10 @@
       <td>{{ item.category }}</td>
       <td>{{ item.title }}</td>
       <td class="text-right">
-        {{ item.origin_price }}
+        {{ currency(item.origin_price) }}
       </td>
       <td class="text-right">
-        {{ item.price }}
+        {{ currency(item.price) }}
       </td>
       <td>
         <span class="text-success" v-if="item.is_enabled">啟用</span>
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { currency } from '../methods/filters'
 import paginationComponent from '../components/PaginationComponent.vue'
 import productModal from '../components/ProductModal.vue'
 import deleteModal from '../components/DeleteModal.vue'
@@ -58,6 +59,7 @@ export default {
     }
   },
   methods: {
+    currency,
     getProducts (page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`
       this.isLoading = true
