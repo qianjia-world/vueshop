@@ -8,6 +8,8 @@
     <tr>
       <th width="120">分類</th>
       <th>產品名稱</th>
+      <th>產品描述</th>
+      <th width="120">單位</th>
       <th width="120">原價</th>
       <th width="120">售價</th>
       <th width="100">是否啟用</th>
@@ -18,6 +20,10 @@
     <tr v-for="item in products" :key="item.id">
       <td>{{ item.category }}</td>
       <td>{{ item.title }}</td>
+      <td>{{ item.description }}</td>
+      <td class="text-right">
+        {{ item.unit }}
+      </td>
       <td class="text-right">
         {{ currency(item.origin_price) }}
       </td>
